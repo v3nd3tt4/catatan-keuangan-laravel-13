@@ -2,6 +2,8 @@
 
 Aplikasi web untuk mencatat pemasukan dan pengeluaran dengan fitur kategori, laporan, dan panel admin.
 
+![Halaman Utama](img/dashboard.png)
+
 ## ✨ Fitur Utama
 
 ### Untuk User Biasa
