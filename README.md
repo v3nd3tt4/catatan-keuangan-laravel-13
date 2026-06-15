@@ -1,60 +1,191 @@
+# 💰 Finance App - Aplikasi Catatan Keuangan
 
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Aplikasi web untuk mencatat pemasukan dan pengeluaran dengan fitur kategori, laporan, dan panel admin.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## ✨ Fitur Utama
 
-## About Laravel
+### Untuk User Biasa
+- ✅ **Dashboard** - Ringkasan pemasukan, pengeluaran, dan saldo
+- ✅ **Transaksi** - CRUD transaksi pemasukan & pengeluaran
+- ✅ **Kategori** - Kelola kategori pemasukan & pengeluaran dengan warna
+- ✅ **Laporan** - Lihat laporan berdasarkan tanggal dan kategori
+- ✅ **Data Terpisah** - Setiap user hanya melihat data miliknya sendiri
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Untuk Admin
+- ✅ **Dashboard Admin** - Ringkasan semua data dari semua user
+- ✅ **Kelola Pengguna** - Lihat daftar semua pengguna
+- ✅ **Transaksi Pengguna** - Lihat detail transaksi setiap pengguna
+- ✅ **Semua Transaksi** - Lihat laporan semua transaksi dengan filter tanggal
+- ✅ **Kategori Semua User** - Lihat kategori dari semua pengguna
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🎨 Desain
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Tema**: Putih Pucat (Soft White/Gray)
+- **Sidebar** untuk navigasi utama
+- **Navbar** untuk info user
+- **Color Coded**: Warna berbeda untuk income (hijau) dan expense (merah)
 
-## Learning Laravel
+## 🚀 Cara Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+### 1. Install Dependencies
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+cd c:\laragon\www\finance-app2
+composer install
+npm install
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Setup Environment
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+### 3. Jalankan Migration & Seeder
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Start Development Server
+```bash
+php artisan serve
+```
 
-## Code of Conduct
+Di terminal lain:
+```bash
+npm run dev
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 📝 Test Account
 
-## Security Vulnerabilities
+### Admin Account
+- **Email**: admin@finance.test
+- **Password**: password
+- Akses: `/admin/dashboard`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### User Account
+- **Email**: user@finance.test
+- **Password**: password
+- Akses: `/dashboard`
 
-## License
+## 📂 Struktur Aplikasi
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+app/
+  ├── Models/
+  │   ├── User.php
+  │   ├── Category.php
+  │   └── Transaction.php
+  ├── Http/Controllers/
+  │   ├── DashboardController.php
+  │   ├── TransactionController.php
+  │   ├── CategoryController.php
+  │   ├── ReportController.php
+  │   └── AdminController.php
 
+database/
+  ├── migrations/
+  │   ├── add_role_to_users_table.php
+  │   ├── create_categories_table.php
+  │   └── create_transactions_table.php
+  └── seeders/
+      └── DatabaseSeeder.php
+
+resources/views/
+  ├── layouts/
+  │   ├── main.blade.php (Layout utama dengan sidebar)
+  │   ├── app.blade.php
+  │   └── guest.blade.php
+  ├── dashboard.blade.php (Dashboard user)
+  ├── transactions/
+  │   ├── index.blade.php
+  │   ├── create.blade.php
+  │   └── edit.blade.php
+  ├── categories/
+  │   ├── index.blade.php
+  │   ├── create.blade.php
+  │   └── edit.blade.php
+  ├── reports/
+  │   ├── index.blade.php (Laporan per tanggal)
+  │   └── by-category.blade.php (Laporan per kategori)
+  └── admin/
+      ├── dashboard.blade.php
+      ├── users/index.blade.php
+      ├── user-transactions.blade.php
+      ├── transactions.blade.php
+      └── categories.blade.php
+```
+
+## 🔒 Keamanan
+
+- **Authentication**: Menggunakan Laravel Breeze
+- **Authorization**: Setiap user hanya bisa akses datanya sendiri
+- **Admin Middleware**: Route admin terlindungi, hanya admin yang bisa akses
+- **Validation**: Semua input divalidasi di controller
+
+## 💾 Database Schema
+
+### Users Table
+```
+id, name, email, password, role (admin/user), timestamps
+```
+
+### Categories Table
+```
+id, user_id, name, type (income/expense), color, timestamps
+```
+
+### Transactions Table
+```
+id, user_id, category_id, type (income/expense), amount, date, description, timestamps
+```
+
+## 🎯 Navigasi
+
+### User
+- Dashboard: `/dashboard`
+- Transaksi: `/transactions`
+- Kategori: `/categories`
+- Laporan: `/reports`
+- Laporan per Kategori: `/reports/by-category`
+
+### Admin
+- Dashboard Admin: `/admin/dashboard`
+- Kelola Pengguna: `/admin/users`
+- Transaksi Pengguna: `/admin/users/{user}/transactions`
+- Semua Transaksi: `/admin/transactions`
+- Kategori: `/admin/categories`
+
+## 📋 Fitur Laporan
+
+### Laporan per Tanggal
+- Filter transaksi berdasarkan range tanggal
+- Tampil total pemasukan, pengeluaran, dan saldo
+- Breakdown per kategori
+- Statistik persentase & rata-rata
+
+### Laporan per Kategori
+- Card view untuk setiap kategori
+- Tampil total transaksi per kategori
+- Riwayat transaksi terbaru per kategori
+
+## 🔄 Relasi Model
+
+```
+User (1) ──> (Many) Category
+User (1) ──> (Many) Transaction
+Category (1) ──> (Many) Transaction
+```
+
+## ⚙️ Stack Teknologi
+
+- **Backend**: Laravel 13, PHP 8.3
+- **Frontend**: Blade, Tailwind CSS, Alpine.js
+- **Database**: SQLite/MySQL
+- **Authentication**: Laravel Breeze
+- **Testing**: Pest
+- **Build Tool**: Vite
+
+---
+
+**Made with ❤️ using Laravel & Tailwind CSS**
