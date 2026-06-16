@@ -8,9 +8,9 @@ MAIL_MAILER=smtp
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=587
 MAIL_ENCRYPTION=tls
-MAIL_USERNAME=pilopaokta@gmail.com
-MAIL_PASSWORD="zest wsck dklm yniq"
-MAIL_FROM_ADDRESS="pilopaokta@gmail.com"
+MAIL_USERNAME=yourmail@gmail.com
+MAIL_PASSWORD="your mail apps password"
+MAIL_FROM_ADDRESS="yourmail@gmail.com"
 MAIL_FROM_NAME="Finance App"
 ```
 
