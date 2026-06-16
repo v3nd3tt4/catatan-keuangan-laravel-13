@@ -20,7 +20,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $num1 = rand(1, 10);
+        $num2 = rand(1, 10);
+        session(['captcha_result' => $num1 + $num2]);
+
+        return view('auth.register', compact('num1', 'num2'));
     }
 
     /**
@@ -34,6 +38,11 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'captcha' => ['required', 'numeric', function ($attribute, $value, $fail) {
+                if ($value != session('captcha_result')) {
+                    $fail('Hasil perhitungan captcha salah.');
+                }
+            }],
         ]);
 
         $user = User::create([

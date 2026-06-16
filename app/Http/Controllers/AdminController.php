@@ -38,7 +38,7 @@ class AdminController extends Controller
 
     public function userTransactions(User $user)
     {
-        if ($user->role === 'admin') {
+        if ($user->role == 'admin') {
             abort(403);
         }
 

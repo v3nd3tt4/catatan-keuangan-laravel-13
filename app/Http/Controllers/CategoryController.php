@@ -43,7 +43,7 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        if ($category->user_id !== auth()->id()) {
+        if ($category->user_id != auth()->id()) {
             abort(403);
         }
 
@@ -52,7 +52,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
-        if ($category->user_id !== auth()->id()) {
+        if ($category->user_id != auth()->id()) {
             abort(403);
         }
 
@@ -73,7 +73,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        if ($category->user_id !== auth()->id()) {
+        if ($category->user_id != auth()->id()) {
             abort(403);
         }
 

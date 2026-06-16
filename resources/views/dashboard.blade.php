@@ -25,6 +25,7 @@
                 <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 {{ $monthBalance >= 0 ? 'border-blue-500' : 'border-orange-500' }}">
                     <div class="text-sm text-gray-600 font-medium">Saldo (Bulan Ini)</div>
                     <div class="mt-2 text-2xl font-bold {{ $monthBalance >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                        {{ $monthBalance >= 0 ? '' : '-' }} &nbsp;
                         Rp {{ number_format(abs($monthBalance), 0, ',', '.') }}
                     </div>
                 </div>
@@ -33,6 +34,7 @@
                 <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 border-indigo-500">
                     <div class="text-sm text-gray-600 font-medium">Total Saldo</div>
                     <div class="mt-2 text-2xl font-bold {{ $totalBalance >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                        {{ $totalBalance >= 0 ? '' : '-' }} &nbsp;
                         Rp {{ number_format(abs($totalBalance), 0, ',', '.') }}
                     </div>
                 </div>
@@ -58,9 +60,17 @@
                                 </div>
                                 <div class="text-right">
                                     <div class="text-sm font-semibold text-gray-900">Rp {{ number_format($category['total'], 0, ',', '.') }}</div>
-                                    <span class="inline-block px-2 py-1 text-xs font-medium rounded {{ $category['type'] === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                        {{ $category['type'] === 'income' ? 'Masuk' : 'Keluar' }}
-                                    </span>
+                                    <div class="mt-1 flex items-center justify-end space-x-2">
+                                        <span class="inline-block px-2 py-1 text-xs font-medium rounded {{ $category['type'] === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                            {{ $category['type'] === 'income' ? 'Masuk' : 'Keluar' }}
+                                        </span>
+                                        <a href="{{ route('categories.edit', $category['id']) }}" class="text-indigo-600 hover:text-indigo-900 text-xs font-medium">Edit</a>
+                                        <form method="POST" action="{{ route('categories.destroy', $category['id']) }}" class="inline" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-900 text-xs font-medium bg-transparent border-0 p-0">Hapus</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         @empty
@@ -78,6 +88,9 @@
                         </a>
                         <a href="{{ route('categories.create') }}" class="block w-full px-4 py-3 border-2 border-indigo-600 text-indigo-600 rounded-lg text-center font-medium hover:bg-indigo-50 transition">
                             + Tambah Kategori
+                        </a>
+                        <a href="{{ route('categories.index') }}" class="block w-full px-4 py-3 border-2 border-gray-200 text-gray-700 rounded-lg text-center font-medium hover:bg-gray-50 transition">
+                            ⚙️ Kelola Kategori
                         </a>
                         <a href="{{ route('report.index') }}" class="block w-full px-4 py-3 border-2 border-gray-200 text-gray-700 rounded-lg text-center font-medium hover:bg-gray-50 transition">
                             📊 Lihat Laporan

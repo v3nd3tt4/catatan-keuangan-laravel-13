@@ -45,6 +45,7 @@ class DashboardController extends Controller
             ->get()
             ->map(function ($category) {
                 return [
+                    'id' => $category->id,
                     'name' => $category->name,
                     'type' => $category->type,
                     'color' => $category->color,

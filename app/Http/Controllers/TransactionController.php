@@ -36,7 +36,7 @@ class TransactionController extends Controller
 
         $category = Category::find($validated['category_id']);
         
-        if ($category->user_id !== auth()->id()) {
+        if ($category->user_id != auth()->id()) {
             return redirect()->back()->with('error', 'Unauthorized');
         }
 
@@ -50,7 +50,7 @@ class TransactionController extends Controller
 
     public function edit(Transaction $transaction)
     {
-        if ($transaction->user_id !== auth()->id()) {
+        if ($transaction->user_id != auth()->id()) {
             abort(403);
         }
 
@@ -60,7 +60,7 @@ class TransactionController extends Controller
 
     public function update(Request $request, Transaction $transaction)
     {
-        if ($transaction->user_id !== auth()->id()) {
+        if ($transaction->user_id != auth()->id()) {
             abort(403);
         }
 
@@ -79,7 +79,7 @@ class TransactionController extends Controller
 
     public function destroy(Transaction $transaction)
     {
-        if ($transaction->user_id !== auth()->id()) {
+        if ($transaction->user_id != auth()->id()) {
             abort(403);
         }
 
