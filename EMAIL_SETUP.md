@@ -70,7 +70,7 @@ MAIL_FROM_NAME="Finance App"
 ### Admin (Email Verified - Bisa Login Langsung)
 ```
 Email: admin@finance.test
-Password: password
+Password: yourpassword
 Role: Admin
 Status: ✅ Verified
 ```
@@ -78,7 +78,7 @@ Status: ✅ Verified
 ### User (Email Verified - Bisa Login Langsung)
 ```
 Email: user@finance.test
-Password: password
+Password: yourpassword
 Role: User
 Status: ✅ Verified
 ```
