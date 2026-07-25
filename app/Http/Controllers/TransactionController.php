@@ -12,7 +12,7 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::where('user_id', auth()->id())
             ->with('category')
-            ->latest('date')
+            ->latest('id')
             ->paginate(15);
 
         return view('transactions.index', compact('transactions'));

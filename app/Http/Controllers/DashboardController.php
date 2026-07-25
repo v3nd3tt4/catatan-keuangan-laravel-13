@@ -35,7 +35,7 @@ class DashboardController extends Controller
         // Transaksi terbaru
         $recentTransactions = Transaction::where('user_id', auth()->id())
             ->with('category')
-            ->latest('date')
+            ->latest('id')
             ->take(5)
             ->get();
 

@@ -12,7 +12,7 @@
                     <!-- Tipe Transaksi -->
                     <div>
                         <label class="block text-sm font-medium text-gray-900 mb-2">Tipe Transaksi</label>
-                        <select name="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent @error('type') border-red-500 @enderror">
+                        <select id="transaction-type" name="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent @error('type') border-red-500 @enderror">
                             <option value="">Pilih Tipe</option>
                             <option value="income" {{ old('type') === 'income' ? 'selected' : '' }}>Pemasukan</option>
                             <option value="expense" {{ old('type') === 'expense' ? 'selected' : '' }}>Pengeluaran</option>
@@ -25,10 +25,10 @@
                     <!-- Kategori -->
                     <div>
                         <label class="block text-sm font-medium text-gray-900 mb-2">Kategori</label>
-                        <select name="category_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent @error('category_id') border-red-500 @enderror">
+                        <select id="category-select" name="category_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent @error('category_id') border-red-500 @enderror">
                             <option value="">Pilih Kategori</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                <option value="{{ $category->id }}" data-type="{{ $category->type }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                     {{ $category->name }} ({{ $category->type === 'income' ? 'Masuk' : 'Keluar' }})
                                 </option>
                             @endforeach
@@ -81,4 +81,39 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const typeSelect = document.getElementById('transaction-type');
+            const categorySelect = document.getElementById('category-select');
+
+            function filterCategories() {
+                const selectedType = typeSelect.value;
+                let hasVisibleOption = false;
+
+                categorySelect.value = '';
+
+                Array.from(categorySelect.options).forEach(function (option) {
+                    if (!option.value) {
+                        return;
+                    }
+
+                    const optionType = option.getAttribute('data-type');
+                    const shouldShow = !selectedType || optionType === selectedType;
+                    option.hidden = !shouldShow;
+                    option.disabled = !shouldShow;
+
+                    if (shouldShow) {
+                        hasVisibleOption = true;
+                    }
+                });
+
+                if (!hasVisibleOption) {
+                    categorySelect.value = '';
+                }
+            }
+
+            typeSelect.addEventListener('change', filterCategories);
+            filterCategories();
+        });
+    </script>
 </x-app-layout>

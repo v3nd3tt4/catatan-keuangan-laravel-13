@@ -179,7 +179,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>💰 Laporan Transaksi Keuangan</h1>
+        <h1> Laporan Transaksi Keuangan</h1>
         <p>Finance App - {{ config('app.name') }}</p>
     </div>
 
@@ -210,12 +210,12 @@
         <div class="summary-item balance">
             <label>Saldo</label>
             <div class="value" style="color: {{ $balance >= 0 ? '#10b981' : '#ef4444' }}">
-                Rp {{ number_format(abs($balance), 0, ',', '.') }}
+                {{ $balance >= 0 ? '' : '-' }} Rp {{ number_format(abs($balance), 0, ',', '.') }}
             </div>
         </div>
     </div>
 
-    <h2 style="font-size: 14px; color: #333; margin-top: 30px; margin-bottom: 15px;">📋 Daftar Transaksi Lengkap</h2>
+    <h2 style="font-size: 14px; color: #333; margin-top: 30px; margin-bottom: 15px;"> Daftar Transaksi Lengkap</h2>
     
     @if($transactions->count() > 0)
         <table>
@@ -254,7 +254,7 @@
 
     @if($byCategory->count() > 0)
         <div class="category-section">
-            <div class="category-title">📊 Rincian per Kategori</div>
+            <div class="category-title"> Rincian per Kategori</div>
             
             @foreach($byCategory as $item)
                 <div style="margin-bottom: 15px;">
