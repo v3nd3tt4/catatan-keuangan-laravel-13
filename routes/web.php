@@ -32,6 +32,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('admin')->middleware(['auth', 'verified', \App\Http\Middleware\IsAdmin::class])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::patch('/users/{user}/verification', [AdminController::class, 'verifyUser'])->name('admin.users.verify');
+        Route::delete('/users/{user}/verification', [AdminController::class, 'unverifyUser'])->name('admin.users.unverify');
+        Route::patch('/users/{user}/password', [AdminController::class, 'updateUserPassword'])->name('admin.users.password');
         Route::get('/users/{user}/transactions', [AdminController::class, 'userTransactions'])->name('admin.user-transactions');
         Route::get('/transactions', [AdminController::class, 'allTransactions'])->name('admin.transactions');
         Route::get('/categories', [AdminController::class, 'categories'])->name('admin.categories');
