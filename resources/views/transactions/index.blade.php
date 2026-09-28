@@ -11,6 +11,42 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white rounded-lg shadow-sm">
+                <div class="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between border-b border-gray-200">
+                    <p class="text-sm text-gray-500">
+                        {{ $transactions->total() }} transaksi
+                        @if ($search !== '')
+                            <span class="text-gray-400">untuk "{{ $search }}"</span>
+                        @endif
+                    </p>
+
+                    <form
+                        method="GET"
+                        action="{{ route('transactions.index') }}"
+                        class="flex items-center gap-2 w-full sm:w-auto"
+                        x-data="{ keyword: @js($search), applied: @js($search) }"
+                        @input.debounce.500ms="if (keyword !== applied) $el.submit()"
+                    >
+                        <div class="relative flex-1 sm:flex-none sm:w-72">
+                            <input
+                                type="search"
+                                name="search"
+                                x-model="keyword"
+                                value="{{ $search }}"
+                                placeholder="Cari keterangan, kategori, atau tipe..."
+                                class="w-full ps-9 pe-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+                        </div>
+                        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium transition">
+                            Cari
+                        </button>
+                        @if ($search !== '')
+                            <a href="{{ route('transactions.index') }}" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 transition">
+                                Reset
+                            </a>
+                        @endif
+                    </form>
+                </div>
+
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead class="bg-gray-50 border-b border-gray-200">
@@ -52,7 +88,13 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="py-8 px-6 text-center text-gray-500">Belum ada transaksi</td>
+                                    <td colspan="6" class="py-8 px-6 text-center text-gray-500">
+                                        @if ($search !== '')
+                                            Tidak ada transaksi yang cocok dengan pencarian "{{ $search }}"
+                                        @else
+                                            Belum ada transaksi
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforelse
                         </tbody>

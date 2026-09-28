@@ -5,17 +5,34 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TransactionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = trim((string) $request->query('search', ''));
+
+        $type = match (Str::lower($search)) {
+            'pemasukan', 'masuk', 'income' => 'income',
+            'pengeluaran', 'keluar', 'expense' => 'expense',
+            default => null,
+        };
+
         $transactions = Transaction::where('user_id', auth()->id())
             ->with('category')
+            ->when($search !== '', function ($query) use ($search, $type) {
+                $query->where(function ($query) use ($search, $type) {
+                    $query->where('description', 'like', "%{$search}%")
+                        ->orWhereHas('category', fn ($category) => $category->where('name', 'like', "%{$search}%"))
+                        ->when($type, fn ($query) => $query->orWhere('type', $type));
+                });
+            })
             ->latest('id')
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
-        return view('transactions.index', compact('transactions'));
+        return view('transactions.index', compact('transactions', 'search'));
     }
 
     public function create()
