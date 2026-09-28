@@ -11,9 +11,10 @@ test('login screen can be rendered', function () {
 test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
-    $response = $this->post('/login', [
+    $response = $this->withSession(['captcha_result' => 10])->post('/login', [
         'email' => $user->email,
         'password' => 'password',
+        'captcha' => 10,
     ]);
 
     $this->assertAuthenticated();
@@ -23,10 +24,23 @@ test('users can authenticate using the login screen', function () {
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-    $this->post('/login', [
+    $this->withSession(['captcha_result' => 10])->post('/login', [
         'email' => $user->email,
         'password' => 'wrong-password',
+        'captcha' => 10,
     ]);
+
+    $this->assertGuest();
+});
+
+test('login is rejected when the captcha answer is wrong', function () {
+    $user = User::factory()->create();
+
+    $this->withSession(['captcha_result' => 10])->post('/login', [
+        'email' => $user->email,
+        'password' => 'password',
+        'captcha' => 9,
+    ])->assertSessionHasErrors('captcha');
 
     $this->assertGuest();
 });
