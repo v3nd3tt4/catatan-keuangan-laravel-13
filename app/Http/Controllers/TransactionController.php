@@ -28,7 +28,7 @@ class TransactionController extends Controller
                         ->when($type, fn ($query) => $query->orWhere('type', $type));
                 });
             })
-            ->latest('id')
+            ->latest('date')
             ->paginate(15)
             ->withQueryString();
 
@@ -52,7 +52,7 @@ class TransactionController extends Controller
         ]);
 
         $category = Category::find($validated['category_id']);
-        
+
         if ($category->user_id != auth()->id()) {
             return redirect()->back()->with('error', 'Unauthorized');
         }

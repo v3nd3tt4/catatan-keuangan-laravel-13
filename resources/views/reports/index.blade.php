@@ -26,20 +26,20 @@
             </div>
 
             <!-- Summary -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 border-green-500">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+                <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 border-t-4 border-green-500">
                     <div class="text-sm text-gray-600 font-medium">Total Pemasukan</div>
-                    <div class="mt-2 text-3xl font-bold text-green-600">Rp {{ number_format($totalIncome, 0, ',', '.') }}</div>
+                    <div class="mt-2 text-2xl font-bold text-green-600">Rp {{ number_format($totalIncome, 0, ',', '.') }}</div>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 border-red-500">
+                <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 border-t-4 border-red-500">
                     <div class="text-sm text-gray-600 font-medium">Total Pengeluaran</div>
-                    <div class="mt-2 text-3xl font-bold text-red-600">Rp {{ number_format($totalExpense, 0, ',', '.') }}</div>
+                    <div class="mt-2 text-2xl font-bold text-red-600">Rp {{ number_format($totalExpense, 0, ',', '.') }}</div>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 {{ $balance >= 0 ? 'border-green-500' : 'border-red-500' }}">
+                <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 border-t-4 {{ $balance >= 0 ? 'border-green-500' : 'border-red-500' }}">
                     <div class="text-sm text-gray-600 font-medium">Selisih</div>
-                    <div class="mt-2 text-3xl font-bold {{ $balance >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                    <div class="mt-2 text-2xl font-bold {{ $balance >= 0 ? 'text-green-600' : 'text-red-600' }}">
                         {{ $balance >= 0 ? '+' : '-' }} Rp {{ number_format(abs($balance), 0, ',', '.') }}
                     </div>
                 </div>

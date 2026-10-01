@@ -7,8 +7,8 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
                 <!-- Month Income -->
                 <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 border-green-500">
                     <div class="text-sm text-gray-600 font-medium">Pemasukan (Bulan Ini)</div>
@@ -25,7 +25,7 @@
                 <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 {{ $monthBalance >= 0 ? 'border-blue-500' : 'border-orange-500' }}">
                     <div class="text-sm text-gray-600 font-medium">Saldo (Bulan Ini)</div>
                     <div class="mt-2 text-2xl font-bold {{ $monthBalance >= 0 ? 'text-green-600' : 'text-red-600' }}">
-                        {{ $monthBalance >= 0 ? '' : '-' }} &nbsp;
+                        {{ $monthBalance >= 0 ? '+' : '-' }} &nbsp;
                         Rp {{ number_format(abs($monthBalance), 0, ',', '.') }}
                     </div>
                 </div>
@@ -42,6 +42,25 @@
 
             <!-- Charts and Recent Transactions -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Aksi Cepat</h3>
+                    <div class="space-y-3">
+                        <a href="{{ route('transactions.create') }}" class="block w-full px-4 py-3 bg-indigo-600 text-white rounded-lg text-center font-medium hover:bg-indigo-700 transition">
+                            + Tambah Transaksi
+                        </a>
+                        <a href="{{ route('categories.create') }}" class="block w-full px-4 py-3 border-2 border-indigo-600 text-indigo-600 rounded-lg text-center font-medium hover:bg-indigo-50 transition">
+                            + Tambah Kategori
+                        </a>
+                        <a href="{{ route('categories.index') }}" class="block w-full px-4 py-3 border-2 border-gray-200 text-gray-700 rounded-lg text-center font-medium hover:bg-gray-50 transition">
+                            ⚙️ Kelola Kategori
+                        </a>
+                        <a href="{{ route('report.index') }}" class="block w-full px-4 py-3 border-2 border-gray-200 text-gray-700 rounded-lg text-center font-medium hover:bg-gray-50 transition">
+                            📊 Lihat Laporan
+                        </a>
+                    </div>
+                </div>
+
                 <!-- Top Categories -->
                 <div class="lg:col-span-2 bg-white rounded-lg shadow-sm p-6">
                     <div class="flex items-center justify-between mb-6">
@@ -79,24 +98,7 @@
                     </div>
                 </div>
 
-                <!-- Quick Actions -->
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Aksi Cepat</h3>
-                    <div class="space-y-3">
-                        <a href="{{ route('transactions.create') }}" class="block w-full px-4 py-3 bg-indigo-600 text-white rounded-lg text-center font-medium hover:bg-indigo-700 transition">
-                            + Tambah Transaksi
-                        </a>
-                        <a href="{{ route('categories.create') }}" class="block w-full px-4 py-3 border-2 border-indigo-600 text-indigo-600 rounded-lg text-center font-medium hover:bg-indigo-50 transition">
-                            + Tambah Kategori
-                        </a>
-                        <a href="{{ route('categories.index') }}" class="block w-full px-4 py-3 border-2 border-gray-200 text-gray-700 rounded-lg text-center font-medium hover:bg-gray-50 transition">
-                            ⚙️ Kelola Kategori
-                        </a>
-                        <a href="{{ route('report.index') }}" class="block w-full px-4 py-3 border-2 border-gray-200 text-gray-700 rounded-lg text-center font-medium hover:bg-gray-50 transition">
-                            📊 Lihat Laporan
-                        </a>
-                    </div>
-                </div>
+
             </div>
 
             <!-- Recent Transactions -->
