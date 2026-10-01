@@ -5,35 +5,101 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-          <!-- Stats Grid -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+    <div class="py-6 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+            <!-- Banner Greeting Hero Card -->
+            <!-- Banner Greeting Hero Card (Option 1: Midnight Navy) -->
+            <div class="relative overflow-hidden rounded-2xl p-6 sm:p-8 text-white shadow-lg"
+                 style="background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #0284c7 100%);">
+
+                <!-- Soft Background Glow -->
+                <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-blue-500/10 blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+
+                    <!-- Ucapan Selamat & Info User -->
+                    <div class="space-y-1.5">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/10 text-xs sm:text-sm font-medium text-blue-200">
+                            <span>👋</span> Selamat Datang Kembali
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+                            {{ auth()->user()->name }}
+                        </h1>
+                        <p class="text-slate-300 text-xs sm:text-sm max-w-md leading-relaxed">
+                            Ringkasan total akumulasi keuangan Anda sejauh ini.
+                        </p>
+                    </div>
+
+                    <!-- Total Pemasukan & Pengeluaran MENYAMPING (Flex Row) -->
+                    <div class="flex items-center gap-3 sm:gap-4 bg-white/5 p-3.5 sm:p-4 rounded-xl">
+
+                        <!-- Box Total Pemasukan -->
+                        <div class="flex items-center space-x-3 pr-3 sm:pr-4 border-r border-white/10">
+                            <div class="p-2 sm:p-2.5 bg-emerald-500/20 rounded-lg text-emerald-400 shrink-0">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-[10px] sm:text-xs text-slate-400 font-medium uppercase tracking-wider block">
+                                    Total Pemasukan
+                                </span>
+                                <p class="text-sm sm:text-base md:text-lg font-bold text-emerald-400 truncate">
+                                    Rp {{ number_format($totalIncome, 0, ',', '.') }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Box Total Pengeluaran -->
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 sm:p-2.5 bg-rose-500/20 rounded-lg text-rose-400 shrink-0">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-[10px] sm:text-xs text-slate-400 font-medium uppercase tracking-wider block">
+                                    Total Pengeluaran
+                                </span>
+                                <p class="text-sm sm:text-base md:text-lg font-bold text-rose-400 truncate">
+                                    Rp {{ number_format($totalExpense, 0, ',', '.') }}
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
                 <!-- Month Income -->
-                <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 border-green-500">
-                    <div class="text-sm text-gray-600 font-medium">Pemasukan (Bulan Ini)</div>
-                    <div class="mt-2 text-2xl font-bold text-gray-900">Rp {{ number_format($monthIncome, 0, ',', '.') }}</div>
+                <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 border-t-4 border-green-500">
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Pemasukan (Bulan Ini)</div>
+                    <div class="mt-2 text-lg sm:text-2xl font-bold text-gray-900 truncate">Rp {{ number_format($monthIncome, 0, ',', '.') }}</div>
                 </div>
 
                 <!-- Month Expense -->
-                <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 border-red-500">
-                    <div class="text-sm text-gray-600 font-medium">Pengeluaran (Bulan Ini)</div>
-                    <div class="mt-2 text-2xl font-bold text-gray-900">Rp {{ number_format($monthExpense, 0, ',', '.') }}</div>
+                <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 border-t-4 border-red-500">
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Pengeluaran (Bulan Ini)</div>
+                    <div class="mt-2 text-lg sm:text-2xl font-bold text-gray-900 truncate">Rp {{ number_format($monthExpense, 0, ',', '.') }}</div>
                 </div>
 
                 <!-- Month Balance -->
-                <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 {{ $monthBalance >= 0 ? 'border-blue-500' : 'border-orange-500' }}">
-                    <div class="text-sm text-gray-600 font-medium">Saldo (Bulan Ini)</div>
-                    <div class="mt-2 text-2xl font-bold {{ $monthBalance >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 border-t-4 {{ $monthBalance >= 0 ? 'border-blue-500' : 'border-orange-500' }}">
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Saldo (Bulan Ini)</div>
+                    <div class="mt-2 text-lg sm:text-2xl font-bold {{ $monthBalance >= 0 ? 'text-green-600' : 'text-red-600' }} truncate">
                         {{ $monthBalance >= 0 ? '+' : '-' }} &nbsp;
                         Rp {{ number_format(abs($monthBalance), 0, ',', '.') }}
                     </div>
                 </div>
 
                 <!-- Total Balance -->
-                <div class="bg-white rounded-lg shadow-sm p-6 border-t-4 border-indigo-500">
-                    <div class="text-sm text-gray-600 font-medium">Total Saldo</div>
-                    <div class="mt-2 text-2xl font-bold {{ $totalBalance >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 border-t-4 border-indigo-500">
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Total Saldo</div>
+                    <div class="mt-2 text-lg sm:text-2xl font-bold {{ $totalBalance >= 0 ? 'text-green-600' : 'text-red-600' }} truncate">
                         {{ $totalBalance >= 0 ? '' : '-' }} &nbsp;
                         Rp {{ number_format(abs($totalBalance), 0, ',', '.') }}
                     </div>
@@ -94,11 +160,9 @@
                             </div>
                         @empty
                             <div class="text-center py-8 text-gray-500">Belum ada kategori</div>
-                        @endforelse
+                        @endforelse <!-- ✔️ SUDAH DIPERBAIKI -->
                     </div>
                 </div>
-
-
             </div>
 
             <!-- Recent Transactions -->
