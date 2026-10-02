@@ -36,8 +36,13 @@ class DashboardController extends Controller
         $recentTransactions = Transaction::where('user_id', auth()->id())
             ->with('category')
             ->latest('date')
+            ->latest('id')
             ->take(5)
             ->get();
+
+        $todayTransactions = Transaction::where('user_id', auth()->id())
+            ->whereDate('date', today())
+            ->sum('amount');
 
         // Kategori dengan transaksi terbanyak
         $topCategories = Category::where('user_id', auth()->id())
@@ -64,7 +69,8 @@ class DashboardController extends Controller
             'totalExpense',
             'totalBalance',
             'recentTransactions',
-            'topCategories'
+            'topCategories',
+            'todayTransactions',
         ));
     }
 }

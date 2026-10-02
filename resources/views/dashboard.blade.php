@@ -98,10 +98,10 @@
 
                 <!-- Total Balance -->
                 <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 border-t-4 border-indigo-500">
-                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Total Saldo</div>
-                    <div class="mt-2 text-lg sm:text-2xl font-bold {{ $totalBalance >= 0 ? 'text-green-600' : 'text-red-600' }} truncate">
-                        {{ $totalBalance >= 0 ? '' : '-' }} &nbsp;
-                        Rp {{ number_format(abs($totalBalance), 0, ',', '.') }}
+                    <div class="text-xs sm:text-sm text-gray-600 font-medium">Pengeluaran Hari Ini</div>
+                    <div class="mt-2 text-lg sm:text-2xl font-bold text-red-600 truncate">
+                        {{ $todayTransactions >= 0 ? '-' : '+' }} &nbsp;
+                        Rp {{ number_format(abs($todayTransactions), 0, ',', '.') }}
                     </div>
                 </div>
             </div>

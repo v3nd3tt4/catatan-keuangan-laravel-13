@@ -24,11 +24,16 @@ class TransactionController extends Controller
             ->when($search !== '', function ($query) use ($search, $type) {
                 $query->where(function ($query) use ($search, $type) {
                     $query->where('description', 'like', "%{$search}%")
-                        ->orWhereHas('category', fn ($category) => $category->where('name', 'like', "%{$search}%"))
-                        ->when($type, fn ($query) => $query->orWhere('type', $type));
+                        ->orWhereHas('category', fn ($category) =>
+                            $category->where('name', 'like', "%{$search}%")
+                        )
+                        ->when($type, fn ($query) =>
+                            $query->orWhere('type', $type)
+                        );
                 });
             })
-            ->latest('date')
+            ->orderByDesc('date')
+            ->orderByDesc('id')
             ->paginate(15)
             ->withQueryString();
 

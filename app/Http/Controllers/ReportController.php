@@ -18,6 +18,7 @@ class ReportController extends Controller
             ->whereBetween('date', [$startDate, $endDate])
             ->with('category')
             ->latest('date')
+            ->latest('id')
             ->get();
 
         $totalIncome = $transactions->where('type', 'income')->sum('amount');
