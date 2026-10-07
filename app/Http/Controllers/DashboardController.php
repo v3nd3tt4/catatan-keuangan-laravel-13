@@ -42,6 +42,7 @@ class DashboardController extends Controller
 
         $todayTransactions = Transaction::where('user_id', auth()->id())
             ->whereDate('date', today())
+            ->where('type', 'expense')
             ->sum('amount');
 
         // Kategori dengan transaksi terbanyak
